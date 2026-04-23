@@ -1,0 +1,244 @@
+.image {
+    width: 100%;
+    display: flex;
+}
+.container{
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    
+}
+.container img{
+    width: 110%;
+    background: url('C:\Users\TECH YARD\Desktop\project login\image hospital.gif') no-repeat center center fixed;
+
+}
+.container h1 {
+    position: absolute;
+    left: 200px;
+    margin-top: 10px;
+    
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 100px;
+    text-shadow: 2px 2px 5px black;
+    animation: bounce 1s infinite;
+}
+@keyframes bounce {
+    0%,100%{transform: translateY(0);}
+    50%{transform: translateY(-5px);}
+    
+
+}
+.signup {
+    position: absolute;
+    background: white;
+    transform: translate(-50%, -50%);
+    background: rgba(red, green, blue, alpha);
+    padding: 30px;
+    left: 50%;
+    top: 68%;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+    color: rgb(26, 22, 22);
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+    
+}
+
+
+
+.left {
+    width: 50%;
+    background: rgba(110, 110, 110, 0.555);
+    padding: 20px;
+    align-items: center;
+    width: 500px;
+  
+
+}
+.left img{
+    margin-top: 55px;
+    width: 100%;
+  
+}
+.left h1{
+    color: white;
+    margin-top: 20px;
+    font-size: 32px;
+}
+.right {
+    width: 100%;
+    padding: 30px;
+   
+    align-items: center;
+    background: rgba(27, 79, 134, 0.358);
+    
+}
+.right h2 {
+    margin-bottom: 20px;
+
+}
+form{
+    width: 300px;
+
+}
+.group {
+    position: relative;
+    margin-bottom: 20px;
+    margin-left: 50px; 
+}
+
+
+form input {
+    width: 120%;
+    padding: 11px;
+    border: 1px solid #100101ba;
+    border-radius: 12px;
+    background: transparent;
+    outline: none;
+    transition: all 0.3s ease;
+
+}
+
+
+label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #44444400;
+    font-style: italic;
+    padding: 0 5px;
+    transition: 0.3s;
+    pointer-events: none;
+    font-size: 14px;
+}
+
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+    top: 0; 
+    font-size: 12px;
+    color: #030110;
+    font-weight: bold;
+}
+
+
+input:focus {
+    border-color: #0d0b1d1c;
+    width: 100% !important; 
+}
+
+
+
+.login{
+    color: rgb(35, 20, 80);
+    margin-left: 220px;
+    cursor: pointer;
+}
+
+
+::placeholder {
+  color:black;         
+  opacity: 2;        
+  font-style: italic; 
+}
+
+
+.my-input::placeholder {
+  color: blue;
+}
+
+form button{
+    width: 100%;
+    padding: 10px;
+    background: #0056b3;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 6px;
+    margin-left: 68px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1ch;
+   
+    background-blend-mode: overlay;
+    padding: 1rem 2rem;
+    position: relative;
+
+    
+    
+}
+form button:hover{
+    background: #034406;
+}
+.left .footer{
+    color: rgb(223, 213, 213);
+    margin-top: 42%;
+    font-size: 10px;
+    text-align: center;
+}
+.btn1{
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1ch;
+    background: 
+        linear-gradient(var(--bg),var(--bg)),
+        linear-gradient(black,black) padding-box,
+        var(--glow);
+    background-blend-mode: overlay;
+    padding: 1rem 2rem;
+    position: relative;
+
+    background: rgba(129, 8, 8, 0.984);
+    margin-left: 68px;
+    border-radius: 15px;
+    
+
+
+}
+.btn1:hover{
+    background: rgba(194, 41, 41, 0.985);
+}
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 2px;
+    height: 14px; 
+}
+
+.success {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.edit.error-input {
+    border: 1px solid red;
+}
+.group {
+    position: relative;
+}
+
+#suggestions {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 120%;
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+}
+
+#suggestions .item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#suggestions .item:hover {
+    background: #eee;
+}

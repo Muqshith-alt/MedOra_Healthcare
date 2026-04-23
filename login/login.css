@@ -1,0 +1,276 @@
+::selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+.image {
+    width: 100%;
+    display: flex;
+}
+
+.container {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.container img {
+    width: 110%;
+    background: url('C:\Users\TECH YARD\Desktop\project login\image hospital.gif') no-repeat center center fixed;
+
+}
+
+.container h1 {
+    position: absolute;
+    left: 200px;
+    margin-top: 10px;
+
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 100px;
+    text-shadow: 2px 2px 5px black;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+
+}
+
+.login {
+    position: absolute;
+    background: white;
+    transform: translate(-50%, -50%);
+    background: rgba(red, green, blue, alpha);
+    padding: 30px;
+    left: 20%;
+    top: 68%;
+    border-radius: 12px;
+   
+    
+    display: flex;
+    flex-direction: row;
+    background: transparent;
+
+}
+
+
+
+.Right {
+    position: absolute;
+    background: rgba(110, 110, 110, 0.555);
+    padding: 20px;
+    align-items: center;
+    width: 8cm;
+    height: 13cm;
+    margin-left: 89.5%;
+    margin-top: 0%;
+    
+    padding: 30px;
+
+
+
+}
+
+.Right img {
+    margin-top: 55px;
+    width: 80%;
+    margin: 25px;
+
+}
+
+.Right h1 {
+    color: white;
+    margin-top: 20px;
+    font-size: 32px;
+}
+
+.left {
+    width: 12cm;
+    height: 13cm;
+    padding: 30px;
+
+    align-items: center;
+    background: rgba(27, 79, 134, 0.358);
+    
+
+}
+
+.left h2 {
+    margin-bottom: 20px;
+
+}
+
+form {
+    width: 300px;
+
+}
+
+.group {
+    position: relative;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    
+}
+
+
+form input {
+    width: 120%;
+    padding: 11px;
+    border: 1px solid #100101ba;
+    border-radius: 12px;
+    background: transparent;
+    outline: none;
+    transition: all 0.3s ease;
+  
+
+}
+
+
+/* label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #44444400;
+    font-style: italic;
+    padding: 0 5px;
+    transition: 0.3s;
+    pointer-events: none;
+    font-size: 14px;
+}
+
+
+input:focus+label,
+input:not(:placeholder-shown)+label {
+    top: 0;
+    font-size: 12px;
+    color: #030110;
+    font-weight: bold;
+} */
+
+
+input:focus {
+    border-color: #0d0b1d1c;
+    width: 100% !important;
+}
+
+
+
+.login {
+    color: rgb(35, 20, 80);
+    margin-left: 220px;
+    cursor: pointer;
+}
+
+
+::placeholder {
+    color: black;
+    opacity: 5;
+    font-style: italic;
+}
+
+
+.my-input::placeholder {
+    color: blue;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background: #0056b3;
+    color: rgb(255, 255, 255);
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 6px;
+    margin-left: 68px;
+    border-radius: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1ch;
+
+    background-blend-mode: overlay;
+    padding: 1rem 2rem;
+    position: relative;
+
+
+
+}
+
+form button:hover {
+    background: #0e0344b8;
+}
+
+.Right .footer {
+    color: rgb(223, 213, 213);
+    margin-top: 22%;
+    font-size: 10px;
+    text-align: center;
+}
+
+.btn1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1ch;
+    background:
+        linear-gradient(var(--bg), var(--bg)),
+        linear-gradient(black, black) padding-box,
+        var(--glow);
+    background-blend-mode: overlay;
+    padding: 1rem 2rem;
+    position: relative;
+
+    background: rgba(2, 83, 33, 0.888);
+    margin-left: 68px;
+    border-radius: 15px;
+    margin-top: 0px;
+
+
+
+}
+
+.btn1:hover {
+    background: rgba(2, 10, 16, 0.447);
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 2px;
+    height: 14px;
+}
+
+.success {
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.edit.error-input {
+    border: 1px solid red;
+}
+.reg{
+    text-align: center;
+    margin-left: 115px;
+    color: beige;
+}
+label{
+    color: black;
+    font-weight: bold ;
+}

@@ -1,0 +1,281 @@
+
+::selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+#bg_img1_div{
+    
+    background-image: url(main_bg.png);
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+#bg_img2_div{
+    background-image: url(aboutUs_bg.jpg);
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+
+}
+#bg_img3_div{
+    display: flex;
+    flex-direction: row; 
+
+}
+
+#bg_img3_div div{
+    background: linear-gradient(to left,white, rgba(11, 243, 127, 0.493) );
+    height: fit-content;
+    margin: auto;
+    width: 50%;
+    font-size: larger;
+}
+
+#bg_img3_div img{
+    height: 100ch;
+    width: 50%;
+}
+
+#bg_img4_div{
+    display: flex;
+    flex-direction: row; 
+
+}
+
+#bg_img4_div div{
+    background: linear-gradient(to left, white,white );
+    height: fit-content;
+    margin: auto;
+    width: 50%;
+    font-size: larger;
+}
+
+
+#bg_img4_div img{
+    height: 100ch;
+    width: 50%;
+}
+
+
+#bg_img5_div{
+    display: flex;
+    flex-direction: row; 
+
+}
+
+#bg_img5_div div{
+    
+    height: fit-content;
+    margin: auto;
+    width: 50%;
+    font-size: larger;
+}
+
+#bg_img5_div img{
+    height: 100ch;
+    width: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#nav_container{
+    
+    
+    box-sizing: border-box;
+    height: fit-content;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap:wrap;
+    box-shadow:  rgba(50, 50, 93, 0.25) 0px 2px 5px -1px , 
+                    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    
+}
+
+.nav_item_div{
+    
+    padding: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+.nav_item_div a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.nav_item_div a:hover{
+    transform: scale(1.2);
+}
+
+.role{
+    margin-top: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    animation: blink-animation 0.6s infinite ease-in-out;
+    cursor: pointer;
+}
+.role_select{
+    margin-top: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    animation: blink-animation 0.6s infinite ease-in-out;
+    cursor: pointer;
+}
+
+#role_select_id{
+    direction: none;
+}
+
+
+@keyframes blink-animation {
+
+    0%, 100%{
+        opacity: 1;
+    }
+
+    
+    50%{
+        opacity: 0;
+    }
+}
+
+    
+    
+
+#signin_btn{
+    margin-top: 20px;
+    height: 50px;
+    width: 150px;
+    background-color: transparent;
+    color: white;
+    
+    
+    border-radius: 7%;
+
+    box-shadow:  rgba(50, 50, 93, 0.25) 0px 2px 5px -1px , 
+                    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    overflow: hidden;
+    position: relative;
+    
+}
+
+#sign_btn_ani_border{
+    margin-top: 20px;
+    width: 200px;
+    height: 20px;
+    background: linear-gradient(45deg , rgb(38, 35, 209) ,rgb(255, 0, 128));
+    filter: blur(5px);
+
+    animation: rotate 1s linear infinite;
+    
+}
+
+@keyframes rotate{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+} 
+
+
+#signin_btn button{
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 40px;
+    width: 140px;
+
+    color: black;
+    background: radial-gradient(circle,white,rgb(41, 207, 236));
+    border: none;
+    border-radius: 7px;
+    font-size: larger;  
+    
+
+}
+#logo_img{
+    border-radius: 50px;
+}
+
+pre{
+    font-family: Arial, Helvetica, sans-serif;
+    
+    
+    font-weight: 60;
+    font-size: 20px;
+}
+#welcome_pre{
+    
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left:0px;
+    margin-top: 175px;
+    color: transparent;
+    -webkit-text-stroke: 1.5px black;
+    font-weight: 900;
+    font-size: 50px;
+    text-transform: uppercase;
+    background: linear-gradient(to right,#800000, #4b0082, #000080);
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    
+}
+
+#medora_span{
+    background: linear-gradient(to right,#00b09b, #96c93d);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+#contactUs_div pre a{
+    color: black;/*have to edit the emojies*/
+    text-decoration: none;
+
+}
+
+#last_bar{
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    color: white;
+}
+#last_bar h4 a:hover{
+     cursor: pointer;
+}
+
