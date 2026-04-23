@@ -14,7 +14,7 @@
     <div class="lower_div">
         <div class="1st_parent">Menu</div>
         <div class="1st_parent">
-            main contant
+            main contantnjih
 
         </div>
     </div>
