@@ -24,7 +24,7 @@ else {
                     //echo "succes";
                     $_SESSION['user_id'] = mysqli_insert_id($conn);
                     $_SESSION['user_name'] = $name;
-                    header("Location: ../home/hom.php");
+                    header("Location: ../dashboards/user_dashboard.php");
                     exit();
                } 
                else 

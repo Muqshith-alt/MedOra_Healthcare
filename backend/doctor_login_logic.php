@@ -20,7 +20,7 @@ if (mysqli_num_rows($result) == 1) {
         $_SESSION['doctor_name'] = $row['full_name'];
         $_SESSION['specialization'] = $row['specialization'];
 
-        header("Location: ../home/hom.php");
+        header("Location: ../dashboards/doctor_dashboard.php");
         exit();
         
     } else {

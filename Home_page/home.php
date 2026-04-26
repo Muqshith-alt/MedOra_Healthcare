@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MedOra</title>
     <link rel="icon" href="C:\Users\TECH YARD\Pictures\heart ai.jpeg" />
-    <link rel="stylesheet" href="style_dashboard.css" />
+    <link rel="stylesheet" href="home.css" />
     <script>
       function scroll_to_top() {
         window,

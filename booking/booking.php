@@ -11,7 +11,7 @@
 <body>
     <div class="mus">
         
-        <h1><img src="../dashboard/logo.jpeg" width="60px" height="60px" class="lap">MedOra</h1><br>
+        <h1><img src="../Home_page/logo.jpeg" width="60px" height="60px" class="lap">MedOra</h1><br>
 
 
         <div class="box">

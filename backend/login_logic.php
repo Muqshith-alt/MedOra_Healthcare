@@ -17,7 +17,7 @@ if (mysqli_num_rows($result) == 1) {
 
         $_SESSION['user_id'] = $row['id'];
 
-        header("Location: ../home/hom.php");
+        header("Location: ../dashboards/user_dashboard.php");
         exit();
         
     } else {

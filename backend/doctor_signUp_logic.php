@@ -29,7 +29,7 @@ else {
         $_SESSION['doctor_id']   = mysqli_insert_id($conn);
         $_SESSION['doctor_name'] = $name;
         
-        header("Location: ../home/hom.php");
+        header("Location: ../dashboards/doctor_dashboard.php");
         exit();
     } 
     else {
