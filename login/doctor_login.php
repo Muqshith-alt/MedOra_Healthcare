@@ -10,7 +10,7 @@
   <body>
     <div class="container">
       <h1>MedOra</h1>
-      <img class="image" src="Doctor_loginBG.jpg" alt="Hospital" />
+      <img class="image" src="loginBG.jpg" alt="Hospital" />
     </div>
 
     <div class="login">

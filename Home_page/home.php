@@ -43,7 +43,7 @@
       <input class="role" type="button" value="Signing in as" />
       <select name="roles" class="role_select" id="role_select_id">
         <option value="user">User</option>
-        <option value="admin">Admin</option>
+        
         <option value="doctor">Doctor</option>
       </select>
       <pre id="welcome_pre">

@@ -1,7 +1,4 @@
 <?php
-
-
-
 session_start();
 include "db_conn.php";
 
@@ -11,31 +8,28 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$address = $_POST['address'];
-$phone = $_POST['phone'];
-$age = $_POST['age'];
-$gender = $_POST['gender'];
-$doctor_name = $_POST['doctor_name'];
-$reason = $_POST['reason'];
+// --- THE CHANGE IS HERE ---
+// We get the doctor_id from the URL (GET) instead of the Form (POST)
+// because your dashboard sent it via window.location.href
+$doctor_id = isset($_GET['doctor_id']) ? mysqli_real_escape_string($conn, $_GET['doctor_id']) : 0;
+// ---------------------------
 
+$reason = mysqli_real_escape_string($conn, $_POST['reason']);
 
+// Set defaults for now
+$appointment_date = date('Y-m-d', strtotime('+1 day')); 
+$appointment_time = "10:00:00"; 
+$status = "Pending";
 
+// Use the columns shown in your phpMyAdmin screenshot
+$insert = "INSERT INTO appointments (user_id, doctor_id, appointment_date, appointment_time, reason, status)
+           VALUES ('$user_id', '$doctor_id', '$appointment_date', '$appointment_time', '$reason', '$status')";
 
-    $insert = "INSERT INTO appointments(id,name,email,address,phone,age,gender,doctor_name,reason)
-               VALUES ('$user_id','$name','$email','$address','$phone','$age','$gender','$doctor_name','$reason')";
-
-               if (mysqli_query($conn, $insert)) {
-                    echo "succes";
-                    //header("Location: ../home/index.php");
-                    //exit();
-               } 
-               else 
-                {
-                   //echo mysqli_error($conn);
-                   die("Insert Error: " . mysqli_error($conn));
-                }
-
-
-?>
+if (mysqli_query($conn, $insert)) {
+    echo "<script>
+            alert('Appointment successfully booked!');
+            window.location.href = '../dashboards/user_dashboard.php';
+          </script>";
+} else {
+    die("Insert Error: " . mysqli_error($conn));
+}

@@ -1,6 +1,5 @@
 let isProfileEditing = false;
 
-
 function updateTime() {
     const now = new Date();
 
@@ -22,355 +21,246 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
 
-
-
 const mainContent = document.getElementById("main_content");
 
-// Dashboard
-// Dashboard Section
 document.getElementById("dashboardBtn").onclick = function () {
-    mainContent.innerHTML = `
-        <div class="dashboard-wrapper">
-            <div class="main-stats-area">
-                <div class="section-header">
-                    <h1>DOCTOR'S DASHBOARD</h1>
-                </div>
+    const mainContent = document.getElementById("main_content"); 
+    mainContent.innerHTML = "<h1 style='padding:20px;'>Loading Overview...</h1>";
 
-                <div class="dash-row">
-                    <div class="dash-col info-card">
-                        <div class="card-header">
-                            <h3>QUICK SCHEDULE</h3>
-                            <select class="mini-select"><option>Status</option></select>
-                        </div>
-                        <p class="subtitle">Today's Appointments</p>
-                        <div class="schedule-list">
-                            <div class="sched-item blue">
-                                <span>10:00 AM - John Doe (Check-up)</span>
-                                <span class="tag urgent">Urgent</span>
-                            </div>
-                            <div class="sched-item green">
-                                <span>11:00 AM - Mary Smith (Follow-up)</span>
-                                <span class="tag urgent">Urgent</span>
-                            </div>
-                            <div class="sched-item red">
-                                <span>12:00 PM - Michael Rodriguez</span>
-                                <span class="tag urgent-red"><i class="fa-solid fa-circle-exclamation"></i> Urgent</span>
-                            </div>
-                        </div>
+    fetch('../backend/get_doctor_profile.php')
+        .then(response => response.json())
+        .then(data => {
+            const p = data.profile;
+
+            mainContent.innerHTML = `
+                <div class="dashboard-overview" style="padding: 20px;">
+                    <div class="section-header" style="margin-bottom: 30px;">
+                        <h1 style="font-size: 2rem; color: #333;">Doctor's Dashboard</h1>
+                        <p style="color: #666;">Welcome back, Dr. ${p.name} | Professional Overview</p>
                     </div>
 
-                    <div class="dash-col info-card">
-                        <div class="card-header">
-                            <h3>PATIENT OVERVIEW</h3>
-                            <button class="more-btn">•••</button>
-                        </div>
-                        <div class="total-patients-bar">
-                            <span>Total Patients: 21</span>
-                            <span class="count">21</span>
-                        </div>
-                        <p class="subtitle">RECENT ACTIVITY</p>
-                        <div class="activity-list">
-                            <div class="act-item">
-                                <img src="https://i.pravatar.cc/150?u=5" alt="user">
-                                <div class="act-details">
-                                    <h4>From Colleague</h4>
-                                    <p>Latest our recents updates.</p>
+                    <div class="dashboard-grid">
+                        <div class="dash-column">
+                            <div class="info-card">
+                                <h3><i class="fa-solid fa-id-card"></i> Professional Details</h3>
+                                <div class="details-list">
+                                    <p><strong>Specialization:</strong> ${p.specialization_name || 'Specialist'}</p>
+                                    <p><strong>Email:</strong> ${p.email}</p>
+                                    <p><strong>Facility:</strong> MedOra Healthcare Center</p>
                                 </div>
-                                <span class="act-time">20m ago</span>
                             </div>
-                            <div class="act-item">
-                                <img src="https://i.pravatar.cc/150?u=6" alt="user">
-                                <div class="act-details">
-                                    <h4>Sarah Johnson</h4>
-                                    <p>Follow-up: udan colleagues.</p>
+
+                            <div class="info-card">
+                                <h3><i class="fa-solid fa-calendar-days"></i> My Schedule</h3>
+                                <div class="details-list">
+                                    ${data.schedule.length > 0 ? 
+                                        data.schedule.map(s => `<p><strong>${s.day_of_week}:</strong> ${s.start_time} - ${s.end_time}</p>`).join('') 
+                                        : '<p>No availability slots set.</p>'}
                                 </div>
-                                <span class="act-time">11m ago</span>
+                            </div>
+                        </div>
+
+                        <div class="dash-column">
+                            <div class="info-card">
+                                <h3><i class="fa-solid fa-clock-rotate-left"></i> Upcoming Appointments</h3>
+                                <div id="miniAppointmentsList">
+                                    <p>Loading recent appointments...</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="profile-sidebar-area">
-                <div class="info-card profile-preview">
-                    <div class="card-header">
-                        <h3>DOCTOR PROFILE</h3>
-                        <button class="more-btn">•••</button>
-                    </div>
-                    <div class="profile-main">
-                        <img src="https://i.pravatar.cc/150?u=doc" alt="Doctor" class="doc-img-large">
-                        <h4>Dr. Muqshith Akbar</h4>
-                        <p class="doc-id">ID: #8</p>
-                        <div class="doc-meta">
-                            <p><strong>Specialty:</strong> Cardiologist</p>
-                            <p><strong>Affiliation:</strong> MedOra Healthcare</p>
-                        </div>
-                        <div class="doc-contact">
-                            <p><i class="fa-solid fa-phone"></i> 0757702778</p>
-                            <p><i class="fa-solid fa-envelope"></i> muqshith.akbar@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-card next-appointment">
-                    <div class="card-header">
-                        <h3>NEXT APPOINTMENT</h3>
-                        <button class="more-btn">•••</button>
-                    </div>
-                    <div class="next-user">
-                        <img src="https://i.pravatar.cc/150?u=9" alt="Patient">
-                        <div class="next-info">
-                            <h4>Sarah Johnson</h4>
-                            <p>Check-up</p>
-                        </div>
-                        <span class="next-time">1:30 PM</span>
-                    </div>
-                    <div class="next-note">
-                        <p><strong>Note:</strong> I'm stay patients with due to today.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+            `;
+            
+            loadMiniAppointments();
+        })
+        .catch(err => {
+            console.error("Dashboard Error:", err);
+            mainContent.innerHTML = "<div style='padding:20px;'><h2>Unable to load dashboard.</h2><p>Check if backend/get_doctor_profile.php exists.</p></div>";
+        });
 };
 
-// Appointments
-// Appointments Section
+function loadMiniAppointments() {
+    fetch('../backend/get_appointments.php')
+        .then(res => {
+            if (!res.ok) throw new Error('Appointments file not found');
+            return res.json();
+        })
+        .then(apps => {
+            const list = document.getElementById("miniAppointmentsList");
+            if(!apps || apps.length === 0) {
+                list.innerHTML = "<p>No appointments scheduled for today.</p>";
+                return;
+            }
+            
+            list.innerHTML = apps.slice(0, 5).map(app => `
+                <div class="mini-app-item" style="display:flex; justify-content:space-between; padding: 10px 0; border-bottom: 1px solid #eee;">
+                    <span><strong>${app.appointment_time}</strong> - ${app.patient_name}</span>
+                    <span class="status-tag ${app.status.toLowerCase()}" style="font-size: 0.8rem; padding: 2px 8px; border-radius: 4px;">${app.status}</span>
+                </div>
+            `).join('');
+        })
+        .catch(err => {
+            console.error("Mini-Appt Error:", err);
+            document.getElementById("miniAppointmentsList").innerHTML = "<p>Could not load recent appointments.</p>";
+        });
+}
+
 document.getElementById("appointmentsBtn").onclick = function () {
-    mainContent.innerHTML = `
-        <div class="appointments-page">
-            <div class="section-header">
-                <h1>Upcoming Appointments</h1>
-                <p class="subtitle">You have 4 appointments scheduled for today.</p>
-            </div>
+    mainContent.innerHTML = "<h1 style='padding:20px;'>Loading Appointments...</h1>";
 
-            <div class="appointment-card info-card">
-                <table class="appointment-table">
-                    <thead>
-                        <tr>
-                            <th>Patient Name</th>
-                            <th>Time</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    fetch('../backend/get_appointments.php')
+        .then(response => response.json())
+        .then(data => {
+            let html = `
+                <div class="appointments-page">
+                    <div class="section-header">
+                        <h1>Upcoming Appointments</h1>
+                        <p class="subtitle">You have ${data.length} total appointments in your records.</p>
+                    </div>
+
+                    <div class="appointment-card info-card">
+                        <table class="appointment-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Time</th>
+                                    <th>Date</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+            if (data.length === 0) {
+                html += `<tr><td colspan="6" style="text-align:center; padding:20px;">No appointments found.</td></tr>`;
+            } else {
+                data.forEach(app => {
+                    const statusLower = app.status.toLowerCase();
+                    
+                    // Logic for Action Buttons based on Status
+                    let actionButtons = '';
+                    if (statusLower === 'pending') {
+                        actionButtons = `
+                            <button class="action-btn accept" onclick="updateApptStatus(${app.appointment_id}, 'Accepted')" title="Accept">
+                                <i class="fa-solid fa-check"></i>
+                            </button>
+                            <button class="action-btn cancel" onclick="updateApptStatus(${app.appointment_id}, 'Cancelled')" title="Reject">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>`;
+                    } else if (statusLower === 'accepted') {
+                        actionButtons = `
+                            <button class="action-btn cancel" onclick="updateApptStatus(${app.appointment_id}, 'Cancelled')" title="Cancel Appointment">
+                                <i class="fa-solid fa-ban"></i>
+                            </button>`;
+                    } else {
+                        actionButtons = `<span style="font-size:0.8rem; color:#999;">No actions available</span>`;
+                    }
+
+                    html += `
                         <tr>
                             <td>
                                 <div class="patient-info">
-                                    <img src="https://via.placeholder.com/40" alt="Patient">
-                                    <span>John Doe</span>
+                                    <div class="patient-avatar-mini">${app.patient_name.charAt(0)}</div>
+                                    <span><strong>${app.patient_name}</strong></span>
                                 </div>
                             </td>
-                            <td>10:30 AM</td>
-                            <td>2026-04-25</td>
-                            <td><span class="status-tag confirmed">Confirmed</span></td>
+                            <td>${app.appointment_time}</td>
+                            <td>${app.appointment_date}</td>
+                            <td>${app.reason}</td>
+                            <td><span class="status-tag ${statusLower}">${app.status}</span></td>
                             <td>
-                                <button class="action-btn view" title="View Records"><i class="fa-solid fa-eye"></i></button>
-                                <button class="action-btn cancel" title="Cancel"><i class="fa-solid fa-xmark"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="patient-info">
-                                    <img src="https://via.placeholder.com/40" alt="Patient">
-                                    <span>Jane Smith</span>
+                                <div class="action-container">
+                                    ${actionButtons}
                                 </div>
                             </td>
-                            <td>11:45 AM</td>
-                            <td>2026-04-25</td>
-                            <td><span class="status-tag pending">Pending</span></td>
-                            <td>
-                                <button class="action-btn view"><i class="fa-solid fa-eye"></i></button>
-                                <button class="action-btn cancel"><i class="fa-solid fa-xmark"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    `;
+                        </tr>`;
+                });
+            }
+
+            html += `</tbody></table></div></div>`;
+            mainContent.innerHTML = html;
+        })
+        .catch(err => {
+            console.error("Error:", err);
+            mainContent.innerHTML = "<h2>Error loading appointments.</h2>";
+        });
 };
 
-// Patients Section
-document.getElementById("patientsBtn").onclick = function () {
-    mainContent.innerHTML = `
-        <div class="patients-page">
-            <div class="section-header-row">
-                <div>
-                    <h1>Patient Directory</h1>
-                    <p class="subtitle">Managing 1,240 total patients</p>
-                </div>
-                <div class="search-container">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="patientSearch" placeholder="Search by name or ID...">
-                </div>
-            </div>
+// Universal function to handle Accept/Cancel/Reject
+function updateApptStatus(id, newStatus) {
+    const confirmMsg = `Are you sure you want to mark this appointment as ${newStatus}?`;
+    if (!confirm(confirmMsg)) return;
 
-            <div class="patients-grid">
-                <div class="patient-card">
-                    <div class="patient-card-top">
-                        <img src="https://i.pravatar.cc/150?u=1" alt="Patient">
-                        <div class="patient-brief">
-                            <h4>Samantha Reed</h4>
-                            <span>ID: #PT-8821</span>
-                        </div>
-                    </div>
-                    <div class="patient-stats">
-                        <div class="stat"><label>Age</label> 28</div>
-                        <div class="stat"><label>Blood</label> O+</div>
-                        <div class="stat"><label>Gender</label> Female</div>
-                    </div>
-                    <div class="patient-footer">
-                        <p><i class="fa-solid fa-calendar-day"></i> Last Visit: 12 April 2026</p>
-                        <button class="view-history-btn">View History</button>
-                    </div>
-                </div>
+    fetch('../backend/update_appointment_status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            appointment_id: id, 
+            status: newStatus 
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("appointmentsBtn").click(); // Refresh the UI
+        } else {
+            alert("Update failed: " + data.message);
+        }
+    })
+    .catch(err => console.error("Request failed", err));
+}
 
-                <div class="patient-card">
-                    <div class="patient-card-top">
-                        <img src="https://i.pravatar.cc/150?u=2" alt="Patient">
-                        <div class="patient-brief">
-                            <h4>Michael Chen</h4>
-                            <span>ID: #PT-8845</span>
-                        </div>
-                    </div>
-                    <div class="patient-stats">
-                        <div class="stat"><label>Age</label> 45</div>
-                        <div class="stat"><label>Blood</label> B-</div>
-                        <div class="stat"><label>Gender</label> Male</div>
-                    </div>
-                    <div class="patient-footer">
-                        <p><i class="fa-solid fa-calendar-day"></i> Last Visit: 20 April 2026</p>
-                        <button class="view-history-btn">View History</button>
-                    </div>
-                </div>
-
-                <div class="patient-card">
-                    <div class="patient-card-top">
-                        <img src="https://i.pravatar.cc/150?u=3" alt="Patient">
-                        <div class="patient-brief">
-                            <h4>Emily Watson</h4>
-                            <span>ID: #PT-8901</span>
-                        </div>
-                    </div>
-                    <div class="patient-stats">
-                        <div class="stat"><label>Age</label> 32</div>
-                        <div class="stat"><label>Blood</label> A+</div>
-                        <div class="stat"><label>Gender</label> Female</div>
-                    </div>
-                    <div class="patient-footer">
-                        <p><i class="fa-solid fa-calendar-day"></i> Last Visit: 24 April 2026</p>
-                        <button class="view-history-btn">View History</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-};
-
-// Schedule
-// Schedule Section
 document.getElementById("scheduleBtn").onclick = function () {
-    mainContent.innerHTML = `
-        <div class="schedule-page">
-            <div class="section-header-row">
-                <div>
-                    <h1>Work Schedule</h1>
-                    <p class="subtitle">Set your availability for patient bookings.</p>
-                </div>
-                <button class="save-btn" onclick="alert('Schedule Updated!')">Publish Schedule</button>
-            </div>
+    mainContent.innerHTML = "<h1>Loading Schedule...</h1>";
 
-            <div class="week-selector">
-    <div class="day-pill active" onclick="selectDay(this)">
-        <span class="day-name">Mon</span>
-        <span class="day-date">25</span>
-    </div>
-    <div class="day-pill" onclick="selectDay(this)">
-        <span class="day-name">Tue</span>
-        <span class="day-date">26</span>
-    </div>
-    <div class="day-pill" onclick="selectDay(this)">
-        <span class="day-name">Wed</span>
-        <span class="day-date">27</span>
-    </div>
-    <div class="day-pill" onclick="selectDay(this)">
-        <span class="day-name">Thu</span>
-        <span class="day-date">28</span>
-    </div>
-    <div class="day-pill" onclick="selectDay(this)">
-        <span class="day-name">Fri</span>
-        <span class="day-date">29</span>
-    </div>
-    <div class="day-pill" onclick="selectDay(this)">
-        <span class="day-name">Sat</span>
-        <span class="day-date">30</span>
-    </div>
-    <div class="day-pill" onclick="selectDay(this)">
-        <span class="day-name">Sun</span>
-        <span class="day-date">01</span>
-    </div>
-</div>
+    fetch('../backend/get_schedule.php') 
+        .then(response => {
+            if (!response.ok) throw new Error('File not found or server error');
+            return response.json();
+        })
+        .then(data => {
+            let scheduleHTML = `
+                <div class="schedule-container">
+                    <h2>Weekly Availability</h2>
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Day</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
 
-            <div class="timeline-container info-card">
-                <div class="time-block">
-                    <div class="time-label">08:00 AM</div>
-                    <div class="schedule-item consultation">
-                        <div class="item-main">
-                            <h4>Morning Consultations</h4>
-                            <p>General Checkups & OPD</p>
-                        </div>
-                        <div class="item-toggle">
-                            <label class="switch">
-                                <input type="checkbox" checked onchange="toggleSlot(this)">
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="status-label">Available</span>
-                        </div>
-                    </div>
-                </div>
+            if (data.length === 0) {
+                scheduleHTML += `<tr><td colspan="4">No schedule set yet.</td></tr>`;
+            } else {
+                data.forEach(slot => {
+                    scheduleHTML += `
+                        <tr>
+                            <td>${slot.day_of_week}</td>
+                            <td>${slot.start_time}</td>
+                            <td>${slot.end_time}</td>
+                            <td><span class="status-badge">${slot.status}</span></td>
+                        </tr>`;
+                });
+            }
 
-                <div class="time-block">
-                    <div class="time-label">11:00 AM</div>
-                    <div class="schedule-item surgery">
-                        <div class="item-main">
-                            <h4>Surgery Block</h4>
-                            <p>Theater 02 - Specialized Procedures</p>
-                        </div>
-                        <div class="item-toggle">
-                            <label class="switch">
-                                <input type="checkbox" onchange="toggleSlot(this)">
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="status-label">Busy</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="time-block">
-                    <div class="time-label">02:00 PM</div>
-                    <div class="schedule-item break">
-                        <div class="item-main">
-                            <h4>Lunch & Administration</h4>
-                            <p>Private Office</p>
-                        </div>
-                        <div class="item-toggle">
-                            <label class="switch">
-                                <input type="checkbox" onchange="toggleSlot(this)">
-                                <span class="slider round"></span>
-                            </label>
-                            <span class="status-label">Unavailable</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+            scheduleHTML += `</tbody></table>
+                <button class="add-btn" onclick="openScheduleModal()">Add New Slot</button>
+            </div>`;
+            
+            mainContent.innerHTML = scheduleHTML;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            mainContent.innerHTML = "<h1>Error loading schedule</h1><p>Please try again later.</p>";
+        });
 };
 
-// Function to handle visual change
 function toggleSlot(checkbox) {
     const parentItem = checkbox.closest('.schedule-item');
     const label = parentItem.querySelector('.status-label');
@@ -386,219 +276,88 @@ function toggleSlot(checkbox) {
     }
 }
 
-// Records
-// Records Section
-
-
-// Profile
 document.getElementById("profileBtn").onclick = function () {
-    mainContent.innerHTML = `
-        <div class="profile-page">
-            <div class="profile-header">
-                <div class="header-banner">
-                    <div class="profile-img-container">
-                        <img src="../Home_page/logo.jpeg" id="mainProfilePic" alt="Doctor Profile">
-                        <label for="imageUpload" class="upload-badge"><i class="fa-solid fa-camera"></i></label>
-                        <input type="file" id="imageUpload" hidden accept="image/*">
-                    </div>
-                    <div class="header-info" id="headerCard">
-                        <h2 class="view-mode">Dr. Muqshith Akbar</h2>
-                        <input type="text" class="edit-mode header-input" value="Dr. Muqshith Akbar" style="display:none;">
-                        
-                        <p class="doc-id">ID: #49203</p>
-                        
-                        <p class="doc-tagline view-mode">Cardiologist | MedOra Hospital</p>
-                        <input type="text" class="edit-mode header-input" value="Cardiologist | MedOra Hospital" style="display:none;">
-                    </div>
-                    <button class="edit-btn-top" onclick="toggleEdit('headerCard')"><i class="fa-solid fa-pen"></i> Edit Header</button>
-                </div>
-            </div>
-
-            <div class="profile-grid">
-                <div class="info-card" id="contactCard">
-                    <div class="card-header">
-                        <h3>Contact Information</h3>
-                        <i class="fa-solid fa-pen edit-trigger" onclick="toggleEdit('contactCard')"></i>
-                    </div>
-                    <div class="input-group">
-                        <i class="fa-solid fa-phone"></i>
-                        <span class="view-mode">0757702778</span>
-                        <input type="tel" class="edit-mode" value="0757702778" style="display:none;">
-                    </div>
-                    <div class="input-group">
-                        <i class="fa-solid fa-envelope"></i>
-                        <span class="view-mode">muqshith.akbar@gmail.com</span>
-                        <input type="email" class="edit-mode" value="muqshith.akbar@gmail.com" style="display:none;">
-                    </div>
-                </div>
-
-                <div class="info-card" id="summaryCard">
-                    <div class="card-header">
-                        <h3>Professional Summary</h3>
-                        <i class="fa-solid fa-pen edit-trigger" onclick="toggleEdit('summaryCard')"></i>
-                    </div>
-                    <p class="view-mode">Experienced cardiologist focused on patient-centered care and modern surgical techniques.</p>
-                    <textarea class="edit-mode" style="display:none;">Experienced cardiologist focused on patient-centered care and modern surgical techniques.</textarea>
-                </div>
-
-                <div class="info-card" id="personalCard">
-                    <div class="card-header">
-                        <h3>Personal Details</h3>
-                        <i class="fa-solid fa-pen edit-trigger" onclick="toggleEdit('personalCard')"></i>
-                    </div>
-                    <div class="detail-row">
-                        <div class="input-stack">
-                            <label>Date of Birth</label>
-                            <span class="view-mode">1990-05-15</span>
-                            <input type="date" class="edit-mode" value="1990-05-15" style="display:none;">
-                        </div>
-                        <div class="input-stack">
-                            <label>Nationality</label>
-                            <span class="view-mode">Sri Lankan</span>
-                            <input type="text" class="edit-mode" value="Sri Lankan" style="display:none;">
+    fetch('../backend/get_profile.php') 
+        .then(response => {
+            if (!response.ok) throw new Error('Not logged in or server error');
+            return response.json();
+        })
+        .then(data => {
+            mainContent.innerHTML = `
+                <div class="profile-page">
+                    <div class="profile-header">
+                        <div class="header-banner">
+                            <div class="profile-img-container">
+                                <img src="../Home_page/logo.jpeg" id="mainProfilePic" alt="Doctor Profile">
+                                <label for="imageUpload" class="upload-badge"><i class="fa-solid fa-camera"></i></label>
+                                <input type="file" id="imageUpload" hidden accept="image/*">
+                            </div>
+                            <div class="header-info" id="headerCard">
+                                <h2 class="view-mode">${data.full_name}</h2>
+                                <input type="text" id="edit_name" class="edit-mode header-input" value="${data.full_name}" style="display:none;">
+                                
+                                <p class="doc-id">ID: #${data.doctor_id}</p>
+                                
+                                <p class="doc-tagline view-mode">${data.specialization} | MedOra Hospital</p>
+                                <input type="text" id="edit_specialization" class="edit-mode header-input" value="${data.specialization}" style="display:none;">
+                            </div>
+                            <button class="edit-btn-top" onclick="toggleEdit('headerCard')"><i class="fa-solid fa-pen"></i> Edit Header</button>
                         </div>
                     </div>
-                </div>
 
-                <div class="info-card" id="expertiseCard">
-                    <div class="card-header">
-                        <h3>Specialties & Expertise</h3>
-                        <i class="fa-solid fa-pen edit-trigger" onclick="toggleEdit('expertiseCard')"></i>
-                    </div>
-                    <div class="view-mode">
-                        <ul class="expertise-list">
-                            <li>Echocardiography</li>
-                            <li>Interventional Cardiology</li>
-                        </ul>
-                    </div>
-                    <textarea class="edit-mode" style="display:none;">Echocardiography, Interventional Cardiology</textarea>
-                </div>
-            </div>
+                    <div class="profile-grid">
+                        <div class="info-card" id="contactCard">
+                            <div class="card-header">
+                                <h3>Contact Information</h3>
+                                <i class="fa-solid fa-pen edit-trigger" onclick="toggleEdit('contactCard')"></i>
+                            </div>
+                            <div class="input-group">
+                                <i class="fa-solid fa-phone"></i>
+                                <span class="view-mode">${data.contact_number}</span>
+                                <input type="tel" id="edit_phone" class="edit-mode" value="${data.contact_number}" style="display:none;">
+                            </div>
+                            <div class="input-group">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span class="view-mode">${data.email}</span>
+                                <input type="email" class="edit-mode" value="${data.email}" disabled style="display:none; background:#f0f0f0;">
+                            </div>
+                        </div>
 
-            <div class="form-actions" id="profileActions">
-    <button class="update-btn" onclick="enableProfileEdit()">Update Profile</button>
-</div>
-        </div>
-    `;
-    setTimeout(() => {
-        disableProfileEdit();
-    }, 0);
+                        <div class="info-card" id="summaryCard">
+                            <div class="card-header">
+                                <h3>Professional Summary</h3>
+                                <i class="fa-solid fa-pen edit-trigger" onclick="toggleEdit('summaryCard')"></i>
+                            </div>
+                            <p class="view-mode">Experienced ${data.specialization} focused on patient-centered care.</p>
+                            <textarea class="edit-mode" style="display:none;">Experienced ${data.specialization} focused on patient-centered care.</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-actions" id="profileActions">
+                        <button class="update-btn" onclick="enableProfileEdit()">Update Profile</button>
+                    </div>
+                </div>
+            `;
+            
+            disableProfileEdit();
+        })
+        .catch(error => {
+            console.error("Error loading profile:", error);
+            mainContent.innerHTML = `
+                <div class="error-msg">
+                    <h2>Unable to load profile</h2>
+                    <p>Please ensure you are logged in correctly.</p>
+                </div>`;
+        });
 };
 
-// Settings
-// Settings Section
-document.getElementById("settingsBtn").onclick = function () {
-    mainContent.innerHTML = `
-        <div class="settings-page">
-            <div class="section-header">
-                <h1>Settings & Configuration</h1>
-                <p class="subtitle">Manage your account preferences and system behavior.</p>
-            </div>
-
-            <div class="settings-grid">
-                <div class="info-card">
-                    <div class="card-header">
-                        <h3><i class="fa-solid fa-shield-halved"></i> Login & Security</h3>
-                    </div>
-                    <div class="settings-content">
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Change Password</h4>
-                                <p>Last changed 3 months ago</p>
-                            </div>
-                            <button class="action-btn-outline">Update</button>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Two-Factor Authentication</h4>
-                                <p>Add an extra layer of security</p>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <div class="card-header">
-                        <h3><i class="fa-solid fa-bell"></i> Notifications</h3>
-                    </div>
-                    <div class="settings-content">
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Appointment Alerts</h4>
-                                <p>Email and push notifications for new bookings</p>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Patient Messages</h4>
-                                <p>Receive alerts for new incoming messages</p>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <div class="card-header">
-                        <h3><i class="fa-solid fa-display"></i> Display & Language</h3>
-                    </div>
-                    <div class="settings-content">
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>Dark Mode</h4>
-                                <p>Switch between light and dark themes</p>
-                            </div>
-                            <label class="switch">
-                                <input type="checkbox" id="darkModeToggle">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <div class="setting-info">
-                                <h4>System Language</h4>
-                            </div>
-                            <select class="settings-select">
-                                <option>English (US)</option>
-                                <option>Spanish</option>
-                                <option>French</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button class="save-btn">Save All Changes</button>
-            </div>
-        </div>
-    `;
-};
-
-// Logout
-// Logout Logic
 document.getElementById("logoutBtn").onclick = function () {
-    // A simple, clean confirmation dialog
     const confirmLogout = confirm("Are you sure you want to logout of MedOra?");
 
     if (confirmLogout) {
-        // This will redirect the user to your logout PHP script
-        // which should clear the session and redirect to login.php
         window.location.href = "../backend/logout.php";
     }
 };
-
-
 
 function loadPage(title, content) {
     mainContent.innerHTML = `
@@ -611,22 +370,18 @@ window.onload = function () {
     document.getElementById("dashboardBtn").click();
 };
 
-// Function to handle the image change (Local only)
 document.addEventListener('change', function (e) {
     if (e.target && e.target.id === 'imageUpload') {
         const file = e.target.files[0];
         if (file) {
-            // Create a temporary URL for the selected file
             const reader = new FileReader();
 
             reader.onload = function (event) {
                 const newImageUrl = event.target.result;
 
-                // 1. Update the big profile picture in the card
                 const mainPic = document.getElementById('mainProfilePic');
                 if (mainPic) mainPic.src = newImageUrl;
 
-                // 2. Update the small logo in the top right corner (upper_nav)
                 const topNavPic = document.getElementById('profile_logo');
                 if (topNavPic) topNavPic.src = newImageUrl;
             };
@@ -636,49 +391,59 @@ document.addEventListener('change', function (e) {
     }
 });
 
-
-
 function selectDay(element) {
-    // Remove active class from all pills
     document.querySelectorAll('.day-pill').forEach(pill => pill.classList.remove('active'));
-    // Add to the clicked one
     element.classList.add('active');
 }
 
-// profile function 
 function enableProfileEdit() {
     isProfileEditing = true;
 
-    // Show all edit icons
     document.querySelectorAll('.edit-trigger, .edit-btn-top').forEach(el => {
         el.style.display = 'block';
     });
 
-    // Change buttons
     document.getElementById('profileActions').innerHTML = `
         <button class="save-btn" onclick="saveProfile()">Save Changes</button>
         <button class="cancel-btn" onclick="cancelProfileEdit()">Cancel</button>
     `;
 }
 
+async function saveProfile() {
+    const updatedData = {
+        full_name: document.getElementById('edit_name').value,
+        specialization: document.getElementById('edit_specialization').value,
+        contact_number: document.getElementById('edit_phone').value
+    };
 
-// profile function 
-function saveProfile() {
-    // Trigger save for all cards
-    document.querySelectorAll('.info-card, #headerCard').forEach(card => {
-        const editElements = card.querySelectorAll('.edit-mode');
-        if (editElements.length > 0 && editElements[0].style.display === 'block') {
-            toggleEdit(card.id);
+    try {
+        const response = await fetch('../backend/update_profile.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert("Profile updated successfully!");
+            document.getElementById("profileBtn").click(); 
+        } else {
+            alert("Error: " + result.message);
         }
-    });
+    } catch (error) {
+        console.error("Save error:", error);
+        alert("Failed to connect to the server.");
+    }
 
     disableProfileEdit();
 }
-// profile function 
+
 function cancelProfileEdit() {
     isProfileEditing = false;
 
-    // Reset ALL cards back to view mode
     document.querySelectorAll('.info-card, #headerCard').forEach(card => {
         const viewElements = card.querySelectorAll('.view-mode');
         const editElements = card.querySelectorAll('.edit-mode');
@@ -690,25 +455,23 @@ function cancelProfileEdit() {
         if (icon) icon.classList.replace('fa-check', 'fa-pen');
     });
 
-    disableProfileEdit(); // hide icons + reset button
+    disableProfileEdit();
 }
-// profile function 
+
 function disableProfileEdit() {
     isProfileEditing = false;
 
-    // Hide edit icons properly
     document.querySelectorAll('.edit-trigger, .edit-btn-top').forEach(el => {
         el.style.display = 'none';
     });
 
-    // Restore Update button
     document.getElementById('profileActions').innerHTML = `
         <button class="update-btn" onclick="enableProfileEdit()">Update Profile</button>
     `;
 }
-// profile function 
+
 function toggleEdit(cardId) {
-    if (!isProfileEditing) return; // 🚫 block editing
+    if (!isProfileEditing) return; 
 
     const card = document.getElementById(cardId);
     const viewElements = card.querySelectorAll('.view-mode');
@@ -738,3 +501,39 @@ function toggleEdit(cardId) {
         if (icon) icon.classList.replace('fa-pen', 'fa-check');
     }
 }
+
+function openScheduleModal() {
+    document.getElementById("scheduleModal").style.display = "block";
+}
+
+function closeScheduleModal() {
+    document.getElementById("scheduleModal").style.display = "none";
+}
+
+document.addEventListener('submit', function(e) {
+    if(e.target && e.target.id === 'addScheduleForm'){
+        e.preventDefault();
+        
+        const formData = {
+            day: document.getElementById('schedDay').value,
+            start: document.getElementById('schedStart').value,
+            end: document.getElementById('schedEnd').value
+        };
+
+        fetch('../backend/add_schedule.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                alert("Schedule added!");
+                closeScheduleModal();
+                document.getElementById("scheduleBtn").click();
+            } else {
+                alert("Error: " + data.message);
+            }
+        });
+    }
+});

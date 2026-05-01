@@ -33,9 +33,8 @@ function roleSingIn() {
 
     if (selectedRole === 'user') {
       window.location.href = '../login/login.php';
-    } else if (selectedRole === 'admin') {
-      window.location.href = '../login/admin_login.php';
-    } else if (selectedRole === 'doctor') {
+    } 
+    else if (selectedRole === 'doctor') {
       window.location.href = '../login/doctor_login.php';
     }
   }

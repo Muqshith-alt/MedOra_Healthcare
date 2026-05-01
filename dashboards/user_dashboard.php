@@ -23,19 +23,19 @@
             <button class="nav-btn active" id="dashboardBtn"><i class="fa-solid fa-gauge"></i> Overview</button>
             <button class="nav-btn" id="findDoctorBtn"><i class="fa-solid fa-user-doctor"></i> Find a Doctor</button>
             <button class="nav-btn" id="appointmentsBtn"><i class="fa-solid fa-calendar-check"></i> My Appointments</button>
-            <button class="nav-btn" id="billingBtn"><i class="fa-solid fa-file-invoice-dollar"></i> Billing & Payments</button>
+            
             <button class="nav-btn" id="profileBtn">
                 <i class="fa-solid fa-user"></i> My Profile
             </button>
         </div>
 
         <div class="bottom_nav_buttons">
-            <button class="nav-btn" id="settingsBtn"><i class="fa-solid fa-gear"></i> Settings</button>
+            
             <button class="nav-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         </div>
     </div>
 
-    <main class="content" id="main_content"></main>
+    <main class="content" id="main-content"></main>
     <script src="user_dashboard.js"></script>
 </body>
 

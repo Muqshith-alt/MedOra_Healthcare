@@ -19,7 +19,7 @@
 
 
 
-            <form action="../backend/booking_logic.php" method="post" >
+            <form action="../backend/booking_logic.php?doctor_id=<?php echo $_GET['doctor_id']; ?>" method="post">
 
 
                 <div class="one">
@@ -99,7 +99,7 @@
 
     <script>
         const params= new URLSearchParams(window.location.search);
-        const doctorName = params.get("doctor");
+        const doctorName = params.get("doctor_name");
         if(doctorName){
             document.querySelector(".booked_doca").value=doctorName;
         }
